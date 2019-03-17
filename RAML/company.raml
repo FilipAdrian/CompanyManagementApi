@@ -1,0 +1,43 @@
+#%RAML 1.0
+title: Company
+
+/subsidiares:
+  description: Collection of all branches wherewith that company has
+  get:
+    description: Get a list of subsidiares based on their id
+  put:
+
+  /{subsidiaryId}:
+    description: Subsidary entity
+    get:
+    post:
+    delete:
+
+    /emplyess:
+      get:
+/eployees:
+  description: People who are employed
+  get:
+  put:
+  /{employeId}:
+    get:
+    post:
+    put:
+    delete:
+
+/products:
+  get:
+  put:
+  /{productID}:
+    get:
+    post:
+    delete:
+          
+/sales:
+  description: Collection of data about all sales
+  get:
+  put:
+  /{saleId}:
+    get:
+    post:
+    delete:
