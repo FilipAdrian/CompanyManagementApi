@@ -1,0 +1,15 @@
+{
+  "id": 51008,
+  "name": "Gonta",
+  "surname": "Ion",
+  "role":"Manager",
+  "phone":"+3735689202",
+  "email":"ion.gonta@gmail.com",
+  "subsidiary":{
+    "id": 100,
+    "name": "Walles Corporation SRL",
+    "location": "Chisinau , str.Ioan Cuza 78",
+    "phone": "023722520"
+  },
+  "address": "Straseni,str. Stefan cel Mare 2"
+}

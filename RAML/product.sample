@@ -1,0 +1,12 @@
+{
+  "id":"971591H150",
+  "name":"Actuator temperature clima",
+  "price":27.87,
+  "manufacturer":"ONNURI",
+  "subsidiary":{
+    "id": 100,
+    "name": "Walles Corporation SRL",
+    "location": "Chisinau , str.Ioan Cuza 78",
+    "phone": "023722520"
+  }
+}

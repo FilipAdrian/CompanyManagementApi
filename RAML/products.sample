@@ -1,0 +1,39 @@
+[
+  {
+    "id":"565213Q000",
+    "name":"Bush-rack",
+    "price":13.56,
+    "manufacturer":"CAN-AM",
+    "subsidiary":{
+      "id": 100,
+      "name": "Walles Corporation SRL",
+      "location": "Chisinau , str.Ioan Cuza 78",
+      "phone": "023722520"
+    }
+  },
+  {
+    "id":"MPK34",
+    "name":"Brake pad set front",
+    "price":22.36,
+    "manufacturer":"ATE",
+    "subsidiary":{
+      "id": 100,
+      "name": "Walles Corporation SRL",
+      "location": "Chisinau , str.Ioan Cuza 78",
+      "phone": "023722520"
+    }
+  },
+  {
+    "id":"GBJK012",
+    "name":"Ball joint front",
+    "price":5.34,
+    "manufacturer":"MANDO",
+    "subsidiary": {
+      "id": 101,
+      "name": "AutoMall SRL",
+      "location": "Chisinau , str.Mihai Viteazu 8",
+      "phone": "023722987"
+    }
+  }
+
+]

@@ -1,0 +1,20 @@
+[
+   { 
+    "id": 51008,
+    "name": "Gonta",
+    "surname": "Ion",
+    "role":"Manager",
+    "phone":"+3735689202",
+    "email":"ion.gonta@gmail.com",
+    "address": "Straseni,str. Stefan cel Mare 2"
+  },
+  {
+    "id": 51010,
+    "name": "Calmis",
+    "surname": "Mihai",
+    "role":"Administrator",
+    "phone":"+3736023333",
+    "email":"mihai.calmis@gmail.com",
+    "address": "Durlesti, str. Teilor 8"
+  }
+]

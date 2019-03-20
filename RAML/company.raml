@@ -1,43 +1,130 @@
 #%RAML 1.0
 title: Company
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/ed74de5c-9d32-48b2-a0a0-819aa200e2a0/ # baseUri: http://comapny.api.com
+mediaType: application/json
+protocols: [HTTPS]
+securitySchemes: 
+  basicAuth: !include securityScheme.raml
+  
+types:
+  subsidiary: !include subsidiary.raml
+  employee: !include employee.raml
+  product: !include product.raml
+
+traits:
+  hasRequestItem:
+    body:
+      application/json:
+        type: |
+          <<typeName>>
+        
+
+  hasResponse:
+    responses:
+      200:
+        body:
+          application/json:
+            type: |
+              <<typeName>>
+            example: |
+              <<example>>
+
+          
+  hasNotFound:
+    responses:
+      404:
+        body:
+          application/json:
+            example: |
+              <<message>>
+              
+resourceTypes:
+  readOnlyCollection:
+    description: Collection of available <<resourcePathName>>
+    get:
+      description: Get a list of <<resourcePathName>>
+      is:
+        [ hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleCollection>>} ]
+
+  collection:
+    description: Data about <<resourcePathName>> in Company
+    get:
+      description: Get a list of <<resourcePathName>>
+      is:
+        [ hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleCollection>> } ]
+    post:
+      description: |
+        Add new <<resourcePathName|!singularize>> to Company
+      securedBy: [ basicAuth ]
+      is:
+        [hasRequestItem: {typeName: <<resourcePathName|!singularize>> }, hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleItem>> }]
+
+
+  item:
+    description: Entity representing a <<resourcePathName|!singularize>>
+    get:
+      description: Get the <<resourcePathName|!singularize>> by its ID
+      is:
+        [ hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleItem>>}, hasNotFound: {message: "The <<resourcePathName|!singularize>> not found"}]   
+    put:
+      description: Update <<resourcePathName|!singularize>> 
+      securedBy: [ basicAuth ]
+      is:
+        [hasRequestItem: {typeName:<<resourcePathName|!singularize>>}, 
+        hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleItem>>}, 
+        hasNotFound: {message: "The <<resourcePathName|!singularize>> not found"}]
+    delete:
+      description: Delete <<resourcePathName|!singularize>>  by its ID
+      securedBy: [ basicAuth ]
+      is:
+        [hasNotFound: {message: "The <<resourcePathName|!singularize>> not found"}]
+      responses:
+        204:
+          body:
+            application/json:
+              example:
+                {message: "The <<resourcePathName|!singularize>> was deleted"}
+          
+
+                
+      
+              
+                  
+        
+
 
 /subsidiares:
-  description: Collection of all branches wherewith that company has
-  get:
-    description: Get a list of subsidiares based on their id
-  put:
-
+  type:
+    collection:
+          exampleCollection: !include subsidiaries.sample
+          exampleItem: !include subsidiary.sample
   /{subsidiaryId}:
-    description: Subsidary entity
-    get:
-    post:
-    delete:
-
-    /emplyess:
-      get:
+    type:
+      item:
+        exampleItem: !include subsidiary.sample
+    /employees:
+      type:
+        readOnlyCollection:
+                  exampleCollection: !include subsidiary-employees.sample
 /eployees:
-  description: People who are employed
-  get:
-  put:
+  type:
+    collection:
+      exampleCollection: !include employees.sample
+      exampleItem: !include employee-retrieve.sample
   /{employeId}:
-    get:
-    post:
-    put:
-    delete:
+    type:
+      item:
+        exampleItem: !include employee-retrieve.sample
+        
 
 /products:
-  get:
-  put:
+  type:
+    collection:
+          exampleCollection: !include products.sample
+          exampleItem: !include product.sample
+      
   /{productID}:
-    get:
-    post:
-    delete:
-          
-/sales:
-  description: Collection of data about all sales
-  get:
-  put:
-  /{saleId}:
-    get:
-    post:
-    delete:
+    type:
+      item:
+        exampleItem: !include product.sample
+        
