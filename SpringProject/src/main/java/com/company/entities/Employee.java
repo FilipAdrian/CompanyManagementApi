@@ -1,5 +1,7 @@
 package com.company.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +22,7 @@ public class Employee {
     private String email;
     @ManyToOne
     @JoinColumn(name = "id_subsidiary")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Subsidiary subsidiary;
     @Column(name = "address")
     private String address;
@@ -36,6 +39,7 @@ public class Employee {
         this.subsidiary = subsidiary;
         this.address = address;
     }
+
 
     public Integer getId() {
         return id;

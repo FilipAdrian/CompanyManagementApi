@@ -1,5 +1,8 @@
 package com.company.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -16,6 +19,7 @@ public class Product {
     private String manufacturer;
     @ManyToOne
     @JoinColumn(name = "id_subsidiary")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Subsidiary subsidiary;
 
     public Product() {

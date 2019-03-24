@@ -18,6 +18,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List <Product> getAllBySubsidiaryId(Integer id) {
+        return productRepository.getAllBySubsidiaryId (id);
+    }
+
+    @Override
     public List <Product> getAll() {
         return productRepository.getAllBy ( );
     }
