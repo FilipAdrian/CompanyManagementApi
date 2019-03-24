@@ -1,0 +1,7 @@
+#%RAML 1.0 ResourceType
+  readOnlyCollection:
+    description: Collection of available <<resourcePathName>>
+    get:
+      description: Get a list of <<resourcePathName>>
+      is:
+        [ hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleCollection>>} ]

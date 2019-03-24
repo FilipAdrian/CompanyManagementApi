@@ -1,0 +1,13 @@
+#%RAML 1.0 ResourceType
+collection:
+    description: Data about <<resourcePathName>> in Company
+    get:
+      description: Get a list of <<resourcePathName>>
+      is:
+        [ hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleCollection>> } ]
+    post:
+      description: |
+        Add new <<resourcePathName|!singularize>> to Company
+      securedBy: [ basicAuth ]
+      is:
+        [hasRequestItem: {typeName: <<resourcePathName|!singularize>> }, hasBeenCreated: {typeName: <<resourcePathName|!singularize>>, example: <<exampleItem>> }]

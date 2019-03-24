@@ -1,6 +1,6 @@
 #%RAML 1.0
 title: Company
-baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/ed74de5c-9d32-48b2-a0a0-819aa200e2a0/ # baseUri: http://comapny.api.com
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/6179c8a0-9d12-47bd-b3c0-183cf2a3f6b8/ # baseUri: http://comapny.api.com
 mediaType: application/json
 protocols: [HTTPS]
 securitySchemes: 
@@ -12,12 +12,27 @@ types:
   product: !include product.raml
 
 traits:
+  hasBadRequest:
+    responses:
+      400:
+        body:
+          application/json:
+            example: {"message": "Ids don not match"}
   hasRequestItem:
     body:
       application/json:
         type: |
           <<typeName>>
         
+  hasBeenCreated:
+    response:
+      201:
+        body:
+          application/json:
+            type: |
+                <<typeName>>
+            example: |
+                <<example>>
 
   hasResponse:
     responses:
@@ -29,7 +44,14 @@ traits:
             example: |
               <<example>>
 
-          
+  hasBeenDeleted:
+    responses:
+      204:
+        body:
+          application/json:
+              example: |
+                {message: "The <<resourcePathName|!singularize>> was deleted"}
+             
   hasNotFound:
     responses:
       404:
@@ -39,59 +61,9 @@ traits:
               <<message>>
               
 resourceTypes:
-  readOnlyCollection:
-    description: Collection of available <<resourcePathName>>
-    get:
-      description: Get a list of <<resourcePathName>>
-      is:
-        [ hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleCollection>>} ]
-
-  collection:
-    description: Data about <<resourcePathName>> in Company
-    get:
-      description: Get a list of <<resourcePathName>>
-      is:
-        [ hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleCollection>> } ]
-    post:
-      description: |
-        Add new <<resourcePathName|!singularize>> to Company
-      securedBy: [ basicAuth ]
-      is:
-        [hasRequestItem: {typeName: <<resourcePathName|!singularize>> }, hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleItem>> }]
-
-
-  item:
-    description: Entity representing a <<resourcePathName|!singularize>>
-    get:
-      description: Get the <<resourcePathName|!singularize>> by its ID
-      is:
-        [ hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleItem>>}, hasNotFound: {message: "The <<resourcePathName|!singularize>> not found"}]   
-    put:
-      description: Update <<resourcePathName|!singularize>> 
-      securedBy: [ basicAuth ]
-      is:
-        [hasRequestItem: {typeName:<<resourcePathName|!singularize>>}, 
-        hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleItem>>}, 
-        hasNotFound: {message: "The <<resourcePathName|!singularize>> not found"}]
-    delete:
-      description: Delete <<resourcePathName|!singularize>>  by its ID
-      securedBy: [ basicAuth ]
-      is:
-        [hasNotFound: {message: "The <<resourcePathName|!singularize>> not found"}]
-      responses:
-        204:
-          body:
-            application/json:
-              example:
-                {message: "The <<resourcePathName|!singularize>> was deleted"}
-          
-
-                
-      
-              
-                  
-        
-
+  collection: !include collectionResource.raml
+  item: !include itemResource.raml
+  readOnlyCollection: !include readOnlyResource.raml
 
 /subsidiares:
   type:
