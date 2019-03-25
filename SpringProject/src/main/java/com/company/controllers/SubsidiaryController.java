@@ -3,6 +3,7 @@ package com.company.controllers;
 import com.company.entities.Employee;
 import com.company.entities.Product;
 import com.company.entities.Subsidiary;
+import com.company.exceptions.DeletedSuccesfullException;
 import com.company.exceptions.IdMismatchException;
 import com.company.exceptions.NotFoundException;
 import com.company.services.EmployeeServiceImpl;
@@ -31,9 +32,9 @@ public class SubsidiaryController {
     }
 
     @PostMapping("/subsidiaries")
-    private ResponseEntity <Subsidiary> addNew(@RequestBody Subsidiary subsidiary) {
+    private ResponseEntity <Subsidiary> save(@RequestBody Subsidiary subsidiary) {
         subsidiaryService.saveOrUpdate (subsidiary);
-        return new ResponseEntity <> (subsidiary, HttpStatus.OK);
+        return new ResponseEntity <> (subsidiary, HttpStatus.CREATED);
     }
 
     @GetMapping("/subsidiaries/{subsidiaryId}")
@@ -58,13 +59,14 @@ public class SubsidiaryController {
     }
 
     @DeleteMapping("/subsidiaries/{subsidiaryId}")
-    private ResponseEntity <?> deleteById(@PathVariable("subsidiaryId") Integer id) {
+    private void deleteById(@PathVariable("subsidiaryId") Integer id) {
         Subsidiary currentSubsidiary = subsidiaryService.getById (id);
         if (currentSubsidiary == null) {
             throw new NotFoundException ("subsidiary", id.toString ( ));
+        } else {
+            subsidiaryService.deleteByID (id);
+            throw new DeletedSuccesfullException ( );
         }
-        subsidiaryService.deleteByID (id);
-        return new ResponseEntity <> ("The subsidiary was deleted", HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/subsidiaries/{subsidiaryId}/employees")
