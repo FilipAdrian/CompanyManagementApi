@@ -1,6 +1,7 @@
 package com.company.controllers;
 
 import com.company.entities.Employee;
+import com.company.entities.ModelView;
 import com.company.entities.Product;
 import com.company.entities.Subsidiary;
 import com.company.exceptions.DeletedSuccesfullException;
@@ -9,6 +10,7 @@ import com.company.exceptions.NotFoundException;
 import com.company.services.EmployeeServiceImpl;
 import com.company.services.ProductServiceImpl;
 import com.company.services.SubsidiaryServiceImpl;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,21 +71,18 @@ public class SubsidiaryController {
         }
     }
 
+    @JsonView(ModelView.Summary.class)
     @GetMapping("/subsidiaries/{subsidiaryId}/employees")
     private ResponseEntity <List <Employee>> getEmployeefFromSubsidiary(@PathVariable("subsidiaryId") Integer id) {
         List <Employee> employees = employeeService.getAllBySubsidiaryId (id);
-        for (Employee employee : employees) {
-            employee.setSubsidiary (null);
-        }
+
         return new ResponseEntity <> (employees, HttpStatus.OK);
     }
 
+    @JsonView(ModelView.Summary.class)
     @GetMapping("/subsidiaries/{subsidiaryId}/products")
     private ResponseEntity <List <Product>> getProductsFromSubsidiary(@PathVariable("subsidiaryId") Integer id) {
         List <Product> products = productService.getAllBySubsidiaryId (id);
-        for (Product product : products) {
-            product.setSubsidiary (null);
-        }
         return new ResponseEntity <> (products, HttpStatus.OK);
     }
 }

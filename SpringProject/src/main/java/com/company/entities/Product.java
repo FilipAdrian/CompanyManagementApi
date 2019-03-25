@@ -1,7 +1,7 @@
 package com.company.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,16 +10,19 @@ import java.math.BigDecimal;
 @Table(name = "product")
 public class Product {
     @Id
+    @JsonView(ModelView.Summary.class)
     private String id;
+    @JsonView(ModelView.Summary.class)
     @Column(name = "name")
     private String name;
+    @JsonView(ModelView.Summary.class)
     @Column(name = "price")
     private BigDecimal price;
+    @JsonView(ModelView.Summary.class)
     @Column(name = "manufacturer")
     private String manufacturer;
     @ManyToOne
     @JoinColumn(name = "id_subsidiary")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Subsidiary subsidiary;
 
     public Product() {

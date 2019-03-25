@@ -1,29 +1,36 @@
 package com.company.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "employee")
 public class Employee {
+    @JsonView(ModelView.Summary.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @JsonView(ModelView.Summary.class)
     @Column(name = "name")
     private String name;
+    @JsonView(ModelView.Summary.class)
     @Column(name = "surname")
     private String surname;
+    @JsonView(ModelView.Summary.class)
     @Column(name = "role")
     private String role;
+    @JsonView(ModelView.Summary.class)
     @Column(name = "phone")
     private String phone;
+    @JsonView(ModelView.Summary.class)
     @Column(name = "email")
     private String email;
     @ManyToOne
     @JoinColumn(name = "id_subsidiary")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Subsidiary subsidiary;
+    @JsonView(ModelView.Summary.class)
     @Column(name = "address")
     private String address;
 
