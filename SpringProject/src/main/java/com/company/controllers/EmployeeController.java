@@ -1,8 +1,6 @@
 package com.company.controllers;
 
 import com.company.entities.Employee;
-import com.company.exceptions.DeletedSuccesfullException;
-import com.company.exceptions.IdMismatchException;
 import com.company.exceptions.NotFoundException;
 import com.company.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,23 +44,28 @@ public class EmployeeController {
         Employee currentEmployee = employeeService.getById (id);
         if (currentEmployee == null) {
             throw new NotFoundException ("employee", id.toString ( ));
-        } else if (id != employee.getId ( )) {
-            throw new IdMismatchException ( );
         }
-        employeeService.saveOrUpdate (employee);
+        currentEmployee.setName (employee.getName ( ));
+        currentEmployee.setSurname (employee.getSurname ( ));
+        currentEmployee.setSubsidiary (employee.getSubsidiary ( ));
+        currentEmployee.setRole (employee.getRole ( ));
+        currentEmployee.setEmail (employee.getEmail ( ));
+        currentEmployee.setAddress (employee.getAddress ( ));
+        currentEmployee.setPhone (employee.getPhone ( ));
+        employeeService.saveOrUpdate (currentEmployee);
 
-        return new ResponseEntity <> (employee, HttpStatus.OK);
+        return new ResponseEntity <> (currentEmployee, HttpStatus.OK);
     }
 
     @DeleteMapping("/employees/{employeeId}")
-    private void deleteById(@PathVariable("employeeId") Integer id) {
+    private ResponseEntity <?> deleteById(@PathVariable("employeeId") Integer id) {
         Employee employee = employeeService.getById (id);
         if (employee == null) {
             throw new NotFoundException ("employee", id.toString ( ));
-        } else {
-            employeeService.deleteById (id);
-            throw new DeletedSuccesfullException ( );
         }
+        employeeService.deleteById (id);
+        return new ResponseEntity <> (HttpStatus.NO_CONTENT);
+
 
     }
 

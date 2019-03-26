@@ -1,8 +1,6 @@
 package com.company.controllers;
 
 import com.company.entities.Product;
-import com.company.exceptions.DeletedSuccesfullException;
-import com.company.exceptions.IdMismatchException;
 import com.company.exceptions.NotFoundException;
 import com.company.services.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,22 +44,23 @@ public class ProductController {
         Product currentProduct = productService.getById (id);
         if (currentProduct == null) {
             throw new NotFoundException ("product", id);
-        } else if (!id.equals (product.getId ( ))) {
-            throw new IdMismatchException ( );
         }
-        productService.saveOrUpdate (product);
+        currentProduct.setName (product.getName ( ));
+        currentProduct.setPrice (product.getPrice ( ));
+        currentProduct.setManufacturer (product.getManufacturer ( ));
+        currentProduct.setSubsidiary (product.getSubsidiary ( ));
+        productService.saveOrUpdate (currentProduct);
 
-        return new ResponseEntity <> (product, HttpStatus.OK);
+        return new ResponseEntity <> (currentProduct, HttpStatus.OK);
     }
 
     @DeleteMapping("/products/{productId}")
-    private void deleteById(@PathVariable("productId") String id) {
+    private ResponseEntity <?> deleteById(@PathVariable("productId") String id) {
         Product product = productService.getById (id);
         if (product == null) {
             throw new NotFoundException ("product", id);
-        } else {
-            productService.deleteById (id);
-            throw new DeletedSuccesfullException ( );
         }
+        productService.deleteById (id);
+        return new ResponseEntity <> (HttpStatus.NO_CONTENT);
     }
 }

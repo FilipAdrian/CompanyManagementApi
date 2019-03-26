@@ -4,8 +4,6 @@ import com.company.entities.Employee;
 import com.company.entities.ModelView;
 import com.company.entities.Product;
 import com.company.entities.Subsidiary;
-import com.company.exceptions.DeletedSuccesfullException;
-import com.company.exceptions.IdMismatchException;
 import com.company.exceptions.NotFoundException;
 import com.company.services.EmployeeServiceImpl;
 import com.company.services.ProductServiceImpl;
@@ -53,22 +51,23 @@ public class SubsidiaryController {
         Subsidiary currentSubsidiary = subsidiaryService.getById (id);
         if (currentSubsidiary == null) {
             throw new NotFoundException ("subsidiary", id.toString ( ));
-        } else if (id != subsidiary.getId ( )) {
-            throw new IdMismatchException ( );
         }
-        subsidiaryService.saveOrUpdate (subsidiary);
-        return new ResponseEntity <> (subsidiary, HttpStatus.OK);
+        currentSubsidiary.setName (subsidiary.getName ( ));
+        currentSubsidiary.setLocation (subsidiary.getLocation ( ));
+        currentSubsidiary.setPhone (subsidiary.getPhone ( ));
+
+        subsidiaryService.saveOrUpdate (currentSubsidiary);
+        return new ResponseEntity <> (currentSubsidiary, HttpStatus.OK);
     }
 
     @DeleteMapping("/subsidiaries/{subsidiaryId}")
-    private void deleteById(@PathVariable("subsidiaryId") Integer id) {
+    private  ResponseEntity <?> deleteById(@PathVariable("subsidiaryId") Integer id) {
         Subsidiary currentSubsidiary = subsidiaryService.getById (id);
         if (currentSubsidiary == null) {
             throw new NotFoundException ("subsidiary", id.toString ( ));
-        } else {
-            subsidiaryService.deleteByID (id);
-            throw new DeletedSuccesfullException ( );
         }
+        subsidiaryService.deleteByID (id);
+        return new ResponseEntity <> (HttpStatus.NO_CONTENT);
     }
 
     @JsonView(ModelView.Summary.class)
