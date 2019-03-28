@@ -1,1 +1,6 @@
-{"main":"company.raml","name":"Company","classifier":"raml","tags":[]}
+{
+  "main": "company.raml",
+  "name": "Company",
+  "classifier": "raml",
+  "tags": []
+}
