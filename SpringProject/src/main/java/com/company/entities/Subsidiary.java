@@ -1,6 +1,7 @@
 package com.company.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "subsidiary")
@@ -8,14 +9,15 @@ public class Subsidiary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "name")
+    @NotBlank
     private String name;
-    @Column(name = "location")
+    @NotBlank
     private String location;
-    @Column(name = "phone")
+    @NotBlank
     private String phone;
 
-    public Subsidiary() { }
+    public Subsidiary() {
+    }
 
     public Subsidiary(String name, String location, String phone) {
         this.name = name;

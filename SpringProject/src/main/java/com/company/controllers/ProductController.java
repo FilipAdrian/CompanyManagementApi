@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    private ResponseEntity <?> save(@RequestBody Product product) {
+    private ResponseEntity <?> save(@Valid @RequestBody Product product) {
         productService.saveOrUpdate (product);
 
         return new ResponseEntity <> (product, HttpStatus.CREATED);
@@ -40,7 +41,7 @@ public class ProductController {
     }
 
     @PutMapping("/products/{productId}")
-    private ResponseEntity <?> update(@RequestBody Product product, @PathVariable("productId") String id) {
+    private ResponseEntity <?> update(@Valid @RequestBody Product product, @PathVariable("productId") String id) {
         Product currentProduct = productService.getById (id);
         if (currentProduct == null) {
             throw new NotFoundException ("product", id);

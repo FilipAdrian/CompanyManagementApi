@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,7 @@ public class SubsidiaryController {
     }
 
     @PostMapping("/subsidiaries")
-    private ResponseEntity <Subsidiary> save(@RequestBody Subsidiary subsidiary) {
+    private ResponseEntity <Subsidiary> save(@Valid @RequestBody Subsidiary subsidiary) {
         subsidiaryService.saveOrUpdate (subsidiary);
         return new ResponseEntity <> (subsidiary, HttpStatus.CREATED);
     }
@@ -47,7 +48,7 @@ public class SubsidiaryController {
     }
 
     @PutMapping("/subsidiaries/{subsidiaryId}")
-    private ResponseEntity <?> update(@RequestBody Subsidiary subsidiary, @PathVariable("subsidiaryId") Integer id) {
+    private ResponseEntity <?> update(@Valid @RequestBody Subsidiary subsidiary, @PathVariable("subsidiaryId") Integer id) {
         Subsidiary currentSubsidiary = subsidiaryService.getById (id);
         if (currentSubsidiary == null) {
             throw new NotFoundException ("subsidiary", id.toString ( ));

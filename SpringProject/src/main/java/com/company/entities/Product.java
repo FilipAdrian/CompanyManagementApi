@@ -1,9 +1,10 @@
 package com.company.entities;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -13,14 +14,15 @@ public class Product {
     @JsonView(ModelView.Summary.class)
     private String id;
     @JsonView(ModelView.Summary.class)
-    @Column(name = "name")
+    @NotBlank
     private String name;
     @JsonView(ModelView.Summary.class)
-    @Column(name = "price")
+    @NotBlank
     private BigDecimal price;
     @JsonView(ModelView.Summary.class)
-    @Column(name = "manufacturer")
+    @NotBlank
     private String manufacturer;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "id_subsidiary")
     private Subsidiary subsidiary;

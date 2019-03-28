@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    private ResponseEntity <?> save(@RequestBody Employee employee) {
+    private ResponseEntity <?> save(@Valid @RequestBody Employee employee) {
+
         employeeService.saveOrUpdate (employee);
 
         return new ResponseEntity <> (employee, HttpStatus.CREATED);
@@ -40,7 +42,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/employees/{employeeId}")
-    private ResponseEntity <?> update(@RequestBody Employee employee, @PathVariable("employeeId") Integer id) {
+    private ResponseEntity <?> update(@Valid @RequestBody Employee employee, @PathVariable("employeeId") Integer id) {
         Employee currentEmployee = employeeService.getById (id);
         if (currentEmployee == null) {
             throw new NotFoundException ("employee", id.toString ( ));

@@ -1,8 +1,11 @@
 package com.company.entities;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "employee")
@@ -12,28 +15,30 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @JsonView(ModelView.Summary.class)
-    @Column(name = "name")
+    @NotBlank
     private String name;
     @JsonView(ModelView.Summary.class)
-    @Column(name = "surname")
+    @NotBlank
     private String surname;
     @JsonView(ModelView.Summary.class)
-    @Column(name = "role")
+    @NotBlank
     private String role;
     @JsonView(ModelView.Summary.class)
-    @Column(name = "phone")
     private String phone;
     @JsonView(ModelView.Summary.class)
-    @Column(name = "email")
+    @NotBlank
+    @Column(unique = true)
     private String email;
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "id_subsidiary")
     private Subsidiary subsidiary;
     @JsonView(ModelView.Summary.class)
-    @Column(name = "address")
+    @NotBlank
     private String address;
 
-    public Employee() {}
+    public Employee() {
+    }
 
     public Employee(String name, String surname, String role, String phone,
                     String email, Subsidiary subsidiary, String address) {
