@@ -4,25 +4,27 @@ baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/6179c8a0-9d12-47bd-b
 mediaType: application/json
 protocols: [HTTPS]
 securitySchemes: 
-  basicAuth: !include securityScheme.raml
+  basicAuth: !include object-model/securityScheme.raml
   
 types:
-  subsidiary: !include subsidiary.raml
-  employee: !include employee.raml
-  product: !include product.raml
+  subsidiary: !include object-model/subsidiary.raml
+  employee: !include object-model/employee.raml
+  product: !include object-model/product.raml
 
 traits:
-  hasBadRequest:
-    responses:
-      400:
-        body:
-          application/json:
-            example: {"message": "Ids don not match"}
   hasRequestItem:
     body:
       application/json:
         type: |
           <<typeName>>
+  
+  hasBadRequest:
+    responses:
+      400:
+        body:
+          application/json:
+            example:
+              {"message": Object is not valid.The Fields must be not null}
         
   hasBeenCreated:
     response:
@@ -47,10 +49,7 @@ traits:
   hasBeenDeleted:
     responses:
       204:
-        body:
-          application/json:
-              example: |
-                {message: "The <<resourcePathName|!singularize>> was deleted"}
+
              
   hasNotFound:
     responses:
@@ -61,49 +60,49 @@ traits:
               <<message>>
               
 resourceTypes:
-  collection: !include collectionResource.raml
-  item: !include itemResource.raml
-  readOnlyCollection: !include readOnlyResource.raml
+  collection: !include resources/collectionResource.raml
+  item: !include resources/itemResource.raml
+  readOnlyCollection: !include resources/readOnlyResource.raml
 
 /subsidiares:
   type:
     collection:
-          exampleCollection: !include subsidiaries.sample
-          exampleItem: !include subsidiary.sample
+          exampleCollection: !include json-examples/subsidiaries.json
+          exampleItem: !include json-examples/subsidiary.json
   /{subsidiaryId}:
     type:
       item:
-        exampleItem: !include subsidiary.sample
+        exampleItem: !include json-examples/subsidiary.json
     /employees:
       type:
         readOnlyCollection:
-                  exampleCollection: !include subsidiary-employees.sample
+                  exampleCollection: !include json-examples/subsidiary-employees.json
     /products:
       description: Get all products that are avilable in a subsidiary
       type:
         readOnlyCollection:
-                     exampleCollection: !include subsidiary-products.sample
+                     exampleCollection: !include json-examples/subsidiary-products.json
 /eployees:
   type:
     collection:
-      exampleCollection: !include employees.sample
-      exampleItem: !include employee-retrieve.sample
+      exampleCollection: !include json-examples/employees.json
+      exampleItem: !include json-examples/employee-retrieve.json
   /{employeId}:
     type:
       item:
-        exampleItem: !include employee-retrieve.sample
+        exampleItem: !include json-examples/employee-retrieve.json
         
 
 /products:
   type:
     collection:
-          exampleCollection: !include products.sample
-          exampleItem: !include product.sample
+          exampleCollection: !include json-examples/products.json
+          exampleItem: !include json-examples/product.json
       
   /{productID}:
     type:
       item:
-        exampleItem: !include product.sample
+        exampleItem: !include json-examples/product.json
 
         
         
