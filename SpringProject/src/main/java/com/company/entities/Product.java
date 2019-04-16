@@ -17,7 +17,7 @@ public class Product {
     @NotBlank
     private String name;
     @JsonView(ModelView.Summary.class)
-    @NotBlank
+    @NotNull
     private BigDecimal price;
     @JsonView(ModelView.Summary.class)
     @NotBlank

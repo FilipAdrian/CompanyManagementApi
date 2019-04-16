@@ -1,0 +1,20 @@
+version: '3'
+services:
+  api:
+    build: .
+    # image: company_management
+    ports:
+     - "8088:8088"
+    links:
+      - dbserver
+    environment:
+      - DATABASE_URL=jdbc:postgresql://localhost:5432/Company
+      - USER=postgres
+      - PASSWORD=postgres
+
+    
+  dbserver:
+    image: postgres
+    ports:
+      - "5432:5432"
+    

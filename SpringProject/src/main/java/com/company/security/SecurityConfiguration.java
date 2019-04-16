@@ -1,5 +1,6 @@
 package com.company.security;
 
+import com.company.exceptions.AuthExceptionEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and ( )
                 .csrf ( ).disable ( )
                 .formLogin ( ).disable ( );
-
+        http.exceptionHandling ().authenticationEntryPoint (new AuthExceptionEntryPoint ());
     }
 
     //

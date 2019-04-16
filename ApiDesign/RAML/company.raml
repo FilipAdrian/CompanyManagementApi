@@ -49,7 +49,14 @@ traits:
   hasBeenDeleted:
     responses:
       204:
-
+  
+  unauthorized:
+    responses: 
+      401:
+        body: 
+          application/json:
+            example:
+               {"message": Unauthorized Access}
              
   hasNotFound:
     responses:

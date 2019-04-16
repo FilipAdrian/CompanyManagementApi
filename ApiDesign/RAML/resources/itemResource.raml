@@ -9,11 +9,11 @@
       description: Update <<resourcePathName|!singularize>> 
       securedBy: [ basicAuth ]
       is:
-        [hasBadRequest,hasRequestItem: {typeName:<<resourcePathName|!singularize>>}, 
+        [hasBadRequest,unauthorized,hasRequestItem: {typeName:<<resourcePathName|!singularize>>}, 
         hasResponse: {typeName: <<resourcePathName|!singularize>>, example: <<exampleItem>>}, 
         hasNotFound: {message: "The <<resourcePathName|!singularize>> not found"}]
     delete:
       description: Delete <<resourcePathName|!singularize>>  by its ID
       securedBy: [ basicAuth ]
       is:
-        [hasBeenDeleted,hasNotFound: {message: "The <<resourcePathName|!singularize>> not found"}]   
+        [unauthorized,hasBeenDeleted,hasNotFound: {message: "The <<resourcePathName|!singularize>> not found"}]   

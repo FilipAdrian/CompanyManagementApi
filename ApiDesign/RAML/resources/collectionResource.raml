@@ -10,4 +10,4 @@ collection:
         Add new <<resourcePathName|!singularize>> to Company
       securedBy: [ basicAuth ]
       is:
-        [hasBadRequest,hasRequestItem: {typeName: <<resourcePathName|!singularize>> }, hasBeenCreated: {typeName: <<resourcePathName|!singularize>>, example: <<exampleItem>> }]
+        [hasBadRequest,unauthorized,hasRequestItem: {typeName: <<resourcePathName|!singularize>> }, hasBeenCreated: {typeName: <<resourcePathName|!singularize>>, example: <<exampleItem>> }]
